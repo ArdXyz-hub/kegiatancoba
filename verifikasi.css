@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f0f0f;
+  font-family: 'Segoe UI', sans-serif;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+}
+
+.tnt-box {
+  background-color: #a00;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+  position: relative;
+}
+
+.tnt {
+  font-size: 50px;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #ffcc00;
+  text-shadow: 2px 2px 0 #000;
+  animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(2deg); }
+  50% { transform: rotate(0deg); }
+  75% { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.loading-bar {
+  background: #444;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 20px;
+  width: 300px;
+  height: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loading-bar .bar {
+  background: #00e676;
+  width: 0%;
+  height: 100%;
+  animation: load 5s linear forwards;
+}
+
+@keyframes load {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+#explosion {
+  font-size: 40px;
+  color: #ff3d00;
+  font-weight: bold;
+  animation: explode 1s ease-out;
+}
+
+@keyframes explode {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+.hide {
+  display: none;
+  }
