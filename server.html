@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Info - Ardan Dev.</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="images/minecraft-logo.png" alt="Minecraft Logo" class="logo">
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <nav id="menu" class="hidden">
+      <ul>
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#">Grup Minecraft Owner 1</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <div class="server-card">
+      <h2 id="server-name">ArdanCraft Server</h2>
+      <div class="server-info">
+        <div class="info-row">
+          <div class="label"><span class="dot" id="status-dot"></span> Status</div>
+          <div id="server-status">Online</div>
+        </div>
+        <div class="info-row">
+          <div class="label"><span class="icon">👤</span> Player</div>
+          <div id="player-count">12</div>
+        </div>
+        <div class="info-row">
+          <div class="label"><span class="icon">📶</span> Ping</div>
+          <div id="ping">47 ms</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Simulasi status server
+    const server = {
+      name: "ArdanCraft Server",
+      online: true,
+      players: 12,
+      ping: 47
+    };
+
+    document.getElementById("server-name").textContent = server.name;
+    document.getElementById("server-status").textContent = server.online ? "Online" : "Offline";
+    document.getElementById("player-count").textContent = server.players;
+    document.getElementById("ping").textContent = server.ping + " ms";
+
+    const statusDot = document.getElementById("status-dot");
+    statusDot.classList.add(server.online ? "green" : "red");
+
+    // Menu toggle
+    const toggle = document.getElementById("menuToggle");
+    const menu = document.getElementById("menu");
+    toggle.onclick = () => {
+      menu.classList.toggle("hidden");
+    };
+  </script>
+</body>
+</html>
