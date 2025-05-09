@@ -2,35 +2,43 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Verifikasi Keamanan - Minecraft</title>
+  <title>Mohon tunggu - sedang verifikasi keamanan</title>
   <link rel="stylesheet" href="verifikasi.css">
 </head>
 <body>
-  <audio autoplay loop>
-    <source src="songmc1.mp3" type="audio/mpeg">
+  <audio autoplay>
+    <source src="tnt.mp3" type="audio/mpeg">
     Your browser does not support the audio tag.
   </audio>
 
   <div class="container">
     <div class="tnt-box">
       <h1>Verifikasi Keamanan</h1>
-      <p>Mohon tunggu 5 detik...</p>
+      <p>Anda akan diarahkan dalam <span id="countdown">5</span> detik...</p>
       <div class="tnt">TNT</div>
       <div class="loading-bar">
         <div class="bar"></div>
       </div>
     </div>
-    <div id="explosion" class="hide">BOOM!!</div>
+    <div id="explosion" class="hide">SELESAI</div>
   </div>
 
   <script>
-    setTimeout(() => {
-      document.getElementById("explosion").classList.remove("hide");
-      document.querySelector(".tnt-box").style.display = "none";
-      setTimeout(() => {
-        window.location.href = "server.html";
-      }, 1200);
-    }, 5000);
+    let countdown = 5;
+    const countdownElement = document.getElementById("countdown");
+
+    const interval = setInterval(() => {
+      countdown--;
+      countdownElement.textContent = countdown;
+      if (countdown === 0) {
+        clearInterval(interval);
+        document.getElementById("explosion").classList.remove("hide");
+        document.querySelector(".tnt-box").style.display = "none";
+        setTimeout(() => {
+          window.location.href = "server.html";
+        }, 1200);
+      }
+    }, 1000);
   </script>
 </body>
 </html>
