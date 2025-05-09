@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Status Server Minecraft</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
+    .status-box {
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      min-width: 300px;
+    }
+    .online {
+      color: #4caf50;
+    }
+    .offline {
+      color: #f44336;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Status Server Minecraft</h1>
+  <div class="status-box">
+    <p><strong>IP Server:</strong> <span id="server-ip">play.example.net</span></p>
+    <p><strong>Status:</strong> <span id="server-status">Mengambil data...</span></p>
+    <p><strong>Pemain Online:</strong> <span id="players-online">-</span></p>
+    <p><strong>Ping:</strong> <span id="server-ping">-</span> ms</p>
+  </div>
+
+  <script>
+    const serverIP = "play.luckynetwork.net"; // Ganti dengan IP servermu
+
+    async function fetchServerStatus() {
+      try {
+        const response = await fetch(`https://api.mcsrvstat.us/2/${serverIP}`);
+        const data = await response.json();
+
+        const statusText = data.online ? "Online" : "Offline";
+        document.getElementById("server-status").textContent = statusText;
+        document.getElementById("server-status").className = data.online ? "online" : "offline";
+
+        if (data.online) {
+          document.getElementById("players-online").textContent = `${data.players.online} / ${data.players.max}`;
+          
+          // Hitung ping menggunakan waktu respons
+          const start = performance.now();
+          await fetch(`https://api.mcsrvstat.us/2/${serverIP}`);
+          const end = performance.now();
+          document.getElementById("server-ping").textContent = Math.round(end - start);
+        } else {
+          document.getElementById("players-online").textContent = "-";
+          document.getElementById("server-ping").textContent = "-";
+        }
+      } catch (error) {
+        console.error("Gagal mengambil data server:", error);
+        document.getElementById("server-status").textContent = "Gagal menghubungi server";
+        document.getElementById("server-status").className = "offline";
+      }
+    }
+
+    fetchServerStatus();
+    setInterval(fetchServerStatus, 10000); // Update setiap 10 detik
+  </script>
+
+</body>
+</html>
