@@ -1,18 +1,41 @@
+/* Latar belakang blur + gelap */
 body {
   margin: 0;
   padding: 0;
-  background-color: #0f0f0f;
   font-family: 'Segoe UI', sans-serif;
   color: #fff;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: url('images.jpg') no-repeat center center/cover;
+  filter: blur(6px);
+  z-index: -2;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+/* Konten tengah */
+.container {
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.container {
-  text-align: center;
+  height: 100%;
 }
 
 .tnt-box {
@@ -21,6 +44,11 @@ body {
   border-radius: 12px;
   box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
   position: relative;
+  z-index: 1;
+}
+
+.tnt-box h1 {
+  margin-bottom: 10px;
 }
 
 .tnt {
@@ -78,4 +106,4 @@ body {
 
 .hide {
   display: none;
-  }
+      }
