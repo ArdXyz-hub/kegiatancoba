@@ -1,93 +1,98 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Server Info - Ardan Dev.</title>
-  <link rel="stylesheet" href="server.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Server Info - Ardan Dev.</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <img src="mc.png" alt="Minecraft Logo" class="logo">
-    <div class="menu-toggle" id="menuToggle">&#9776;</div>
-    <nav id="menu" class="hidden">
-      <ul>
-        <li><a href="#">Beranda</a></li>
-        <li><a href="https://chat.whatsapp.com/HagDjnsjBFaAiuSJ2weNm0">Grup Minecraft</a></li>
-      </ul>
-    </nav>
-  </header>
+  <header>
+    <img src="mc.png" alt="Minecraft Logo" class="logo">
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <nav id="menu" class="hidden">
+      <ul>
+        <li><a href="#">Beranda</a></li>
+        <li><a href="#">Grup Minecraft Owner 1</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <main>
-    <div class="server-card">
-      <h2 id="java-name">Java Edition</h2>
-      <div class="server-info">
-        <div class="info-row">
-          <div class="label"><span class="dot" id="java-dot"></span> Status</div>
-          <div id="java-status">Loading...</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">👤</span> Player</div>
-          <div id="java-players">-</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">📶</span> Ping</div>
-          <div id="java-ping">-</div>
-        </div>
-      </div>
-    </div>
+  <main>
+    <div class="server-card">
+      <h2 id="java-name">Java Server</h2>
+      <div class="server-info">
+        <div class="info-row">
+          <div class="label"><span class="dot" id="java-dot"></span> Status</div>
+          <div id="java-status">Memuat...</div>
+        </div>
+        <div class="info-row">
+          <div class="label"><span class="icon">👤</span> Player</div>
+          <div id="java-players">-</div>
+        </div>
+        <div class="info-row">
+          <div class="label"><span class="icon">📶</span> Ping</div>
+          <div id="java-ping">-</div>
+        </div>
+        <div class="info-row">
+          <div class="label">MOTD</div>
+          <div id="java-motd">Memuat...</div>
+        </div>
+      </div>
+    </div>
 
-    <div class="server-card">
-      <h2 id="bedrock-name">Bedrock Edition</h2>
-      <div class="server-info">
-        <div class="info-row">
-          <div class="label"><span class="dot" id="bedrock-dot"></span> Status</div>
-          <div id="bedrock-status">Loading...</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">👤</span> Player</div>
-          <div id="bedrock-players">-</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">📶</span> Ping</div>
-          <div id="bedrock-ping">-</div>
-        </div>
-      </div>
-    </div>
-  </main>
+    <div class="server-card">
+      <h2 id="bedrock-name">Bedrock Server</h2>
+      <div class="server-info">
+        <div class="info-row">
+          <div class="label"><span class="dot" id="bedrock-dot"></span> Status</div>
+          <div id="bedrock-status">Memuat...</div>
+        </div>
+        <div class="info-row">
+          <div class="label"><span class="icon">👤</span> Player</div>
+          <div id="bedrock-players">-</div>
+        </div>
+        <div class="info-row">
+          <div class="label"><span class="icon">📶</span> Ping</div>
+          <div id="bedrock-ping">-</div>
+        </div>
+        <div class="info-row">
+          <div class="label">MOTD</div>
+          <div id="bedrock-motd">Memuat...</div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-  <script>
-    const javaIP = "Sann_Waltz.aternos.me";       // Ganti dengan IP server Java kamu
-    const bedrockIP = "Sann_Waltz.aternos.me"; // Ganti dengan IP server Bedrock kamu
+  <script>
+    async function fetchServerInfo(ip, type) {
+      try {
+        const res = await fetch(`https://api.mcsrvstat.us/2/${ip}`);
+        const data = await res.json();
 
-    async function fetchServerInfo(ip, type) {
-      try {
-        const res = await fetch(`https://api.mcsrvstat.us/2/${ip}`);
-        const data = await res.json();
+        document.getElementById(`${type}-name`).textContent = `${type === 'java' ? 'Java Edition' : 'Bedrock Edition'} (${data.hostname || ip})`;
+        document.getElementById(`${type}-status`).textContent = data.online ? "Online" : "Offline";
+        document.getElementById(`${type}-players`).textContent = data.players ? data.players.online : "0";
+        document.getElementById(`${type}-ping`).textContent = data.debug.ping || "-";
+        document.getElementById(`${type}-motd`).textContent = data.motd?.clean?.join(" ") || "-";
 
-        document.getElementById(`${type}-name`).textContent = `${type === 'java' ? 'Java Edition' : 'Bedrock Edition'} (${data.hostname || ip})`;
-        document.getElementById(`${type}-status`).textContent = data.online ? "Online" : "Offline";
-        document.getElementById(`${type}-players`).textContent = data.players ? data.players.online : "0";
-        document.getElementById(`${type}-ping`).textContent = data.debug.ping || "-";
+        const dot = document.getElementById(`${type}-dot`);
+        dot.classList.add(data.online ? "green" : "red");
+      } catch (err) {
+        console.error(`Gagal mengambil info ${type}:`, err);
+        document.getElementById(`${type}-status`).textContent = "Error";
+      }
+    }
 
-        const dot = document.getElementById(`${type}-dot`);
-        dot.classList.add(data.online ? "green" : "red");
-      } catch (err) {
-        console.error(`Gagal mengambil info ${type}:`, err);
-        document.getElementById(`${type}-status`).textContent = "Error";
-      }
-    }
+    // IP server Java dan Bedrock (ubah sesuai milikmu)
+    fetchServerInfo("Sann_Waltz.aternos.me", "java");
+    fetchServerInfo("Sann_Waltz.aternos.me:32600", "bedrock");
 
-    fetchServerInfo(javaIP, "java");
-    fetchServerInfo(bedrockIP, "bedrock");
-
-    // Menu toggle
-    const toggle = document.getElementById("menuToggle");
-    const menu = document.getElementById("menu");
-    toggle.onclick = () => {
-      menu.classList.toggle("hidden");
-    };
-  </script>
+    // Menu toggle
+    document.getElementById("menuToggle").onclick = () => {
+      document.getElementById("menu").classList.toggle("hidden");
+    };
+  </script>
 </body>
   </html>
   
