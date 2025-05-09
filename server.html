@@ -1,126 +1,133 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Server Info - Ardan Dev.</title>
-  <link rel="stylesheet" href="server.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Info - Ardan Dev.</title>
+    <link rel="stylesheet" href="server.css">
 </head>
 <body>
-  <header>
-    <img src="mc.png" alt="Minecraft Logo" class="logo">
-    <div class="menu-toggle" id="menuToggle">&#9776;</div>
-    <nav id="menu" class="hidden">
-      <ul>
-        <li><a href="#">Beranda</a></li>
-        <li><a href="https://chat.whatsapp.com/HagDjnsjBFaAiuSJ2weNm0">Join Grup Minecraft</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+        <img src="mc.png" alt="Minecraft Logo" class="logo">
+        <div class="menu-toggle" id="menuToggle">&#9776;</div>
+        <nav id="menu" class="hidden">
+            <ul>
+                <li><a href="#">Beranda</a></li>
+                <li><a href="https://chat.whatsapp.com/HagDjnsjBFaAiuSJ2weNm0">Join Grup Minecraft</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main>
-    <div class="server-card">
-      <h2 id="java-name">Java Server</h2>
-      <div class="server-info">
-        <div class="info-row">
-          <div class="label"><span class="dot" id="java-dot"></span> Status</div>
-          <div id="java-status">Memuat...</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">👤</span> Player</div>
-          <div id="java-players">-</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">📶</span> Ping</div>
-          <div id="java-ping">-</div>
-        </div>
-        <div class="info-row">
-          <div class="label">MOTD</div>
-          <div id="java-motd">Memuat...</div>
-        </div>
-      </div>
-    </div>
+    <main>
+        <div class="server-card" id="java-server">
+            <h2 id="java-name">Java Server</h2>
+            <div class="server-info">
+                <div class="info-row">
+                    <div class="label"><span class="dot" id="java-dot"></span> Status</div>
+                    <div id="java-status">Memuat...</div>
+                </div>
+                <div class="info-row">
+                    <div class="label"><span class="icon">👤</span> Player</div>
+                    <div id="java-players">-</div>
+                </div>
+                <div class="info-row">
+                    <div class="label"><span class="icon">📶</span> Ping</div>
+                    <div id="java-ping">-</div>
+                </div>
+                <div class="info-row">
+                    <div class="label">MOTD</div>
+                    <div id="java-motd">Memuat...</div>
+                </div>
+            </div>
+        </div>
 
-    <div class="server-card">
-      <h2 id="bedrock-name">Bedrock Server</h2>
-      <div class="server-info">
-        <div class="info-row">
-          <div class="label"><span class="dot" id="bedrock-dot"></span> Status</div>
-          <div id="bedrock-status">Memuat...</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">👤</span> Player</div>
-          <div id="bedrock-players">-</div>
-        </div>
-        <div class="info-row">
-          <div class="label"><span class="icon">📶</span> Ping</div>
-          <div id="bedrock-ping">-</div>
-        </div>
-        <div class="info-row">
-          <div class="label">MOTD</div>
-          <div id="bedrock-motd">Memuat...</div>
-        </div>
-      </div>
-    </div>
-  </main>
+        <div class="server-card" id="bedrock-server">
+            <h2 id="bedrock-name">Bedrock Server</h2>
+            <div class="server-info">
+                <div class="info-row">
+                    <div class="label"><span class="dot" id="bedrock-dot"></span> Status</div>
+                    <div id="bedrock-status">Memuat...</div>
+                </div>
+                <div class="info-row">
+                    <div class="label"><span class="icon">👤</span> Player</div>
+                    <div id="bedrock-players">-</div>
+                </div>
+                <div class="info-row">
+                    <div class="label"><span class="icon">📶</span> Ping</div>
+                    <div id="bedrock-ping">-</div>
+                </div>
+                <div class="info-row">
+                    <div class="label">MOTD</div>
+                    <div id="bedrock-motd">Memuat...</div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-  <script>
-    async function fetchServerInfo(ip, type, edition = "java") {
-      const statusEl = document.getElementById(`${type}-status`);
-      const playersEl = document.getElementById(`${type}-players`);
-      const pingEl = document.getElementById(`${type}-ping`);
-      const motdEl = document.getElementById(`${type}-motd`);
-      const dot = document.getElementById(`${type}-dot`);
+    <script>
+        async function fetchServerInfo(ip, type, edition = "java") {
+            const statusEl = document.getElementById(`${type}-status`);
+            const playersEl = document.getElementById(`${type}-players`);
+            const pingEl = document.getElementById(`${type}-ping`);
+            const motdEl = document.getElementById(`${type}-motd`);
+            const dot = document.getElementById(`${type}-dot`);
 
-      // Loading state
-      statusEl.textContent = "Memuat...";
-      playersEl.textContent = "...";
-      pingEl.textContent = "...";
-      motdEl.textContent = "Memuat...";
-      dot.classList.remove("green", "red");
-      dot.classList.add("loading");
+            statusEl.textContent = "Memuat...";
+            playersEl.textContent = "...";
+            pingEl.textContent = "...";
+            motdEl.textContent = "Memuat...";
+            dot.classList.remove("green", "red");
+            dot.classList.add("loading");
 
-      try {
-        const res = await fetch(`https://api.mcstatus.io/v2/status/${edition}/${ip}`);
-        const data = await res.json();
+            try {
+                const res = await fetch(`https://api.mcstatus.io/v2/status/${edition}/${ip}`);
+                const data = await res.json();
 
-        const isOnline = data.online === true;
-        statusEl.textContent = isOnline ? "Online" : "Offline";
-        playersEl.textContent = isOnline && data.players
-          ? `${data.players.online ?? 0} / ${data.players.max ?? "-"}`
-          : "-";
-        let ping = "-";
-        if (isOnline && data.latency?.ms) ping = `${data.latency.ms} ms`;
-        else if (data.srv_record?.latency) ping = `${data.srv_record.latency} ms`;
-        pingEl.textContent = ping;
-        motdEl.textContent = isOnline
-          ? (data.motd?.clean?.join(" ") ?? data.motd?.raw ?? "-")
-          : "-";
+                const isOnline = data.online === true;
+                statusEl.textContent = isOnline ? "Online" : "Offline";
 
-        dot.classList.remove("green", "red", "loading");
-        dot.classList.add(isOnline ? "green" : "red");
-      } catch (err) {
-        console.error(`Gagal mengambil info ${type}:`, err);
-        statusEl.textContent = "Error";
-        playersEl.textContent = "-";
-        pingEl.textContent = "-";
-        motdEl.textContent = "-";
-        dot.classList.remove("green", "red", "loading");
-        dot.classList.add("red");
-      }
-    }
+                if (isOnline && data.players) {
+                    playersEl.textContent = `${data.players.online ?? 0} / ${data.players.max ?? "-"}`;
+                } else {
+                    playersEl.textContent = "-";
+                }
 
-    function refreshAll() {
-      fetchServerInfo("belunada", "java", "java");
-      fetchServerInfo("play.cubecraft.net:19132", "bedrock", "bedrock");
-    }
+                let ping = "-";
+                if (isOnline) {
+                    if (data.latency?.ms) {
+                        ping = `${data.latency.ms} ms`;
+                    } else if (data.srv_record?.latency) {
+                        ping = `${data.srv_record.latency} ms`;
+                    }
+                }
+                pingEl.textContent = ping;
 
-    refreshAll();
-    setInterval(refreshAll, 15000);
+                motdEl.textContent = isOnline ? (data.motd?.clean?.join(" ") ?? data.motd?.raw ?? "-") : "-";
 
-    document.getElementById("menuToggle").onclick = () => {
-      document.getElementById("menu").classList.toggle("hidden");
-    };
-  </script>
+                dot.classList.remove("green", "red", "loading");
+                dot.classList.add(isOnline ? "green" : "red");
+            } catch (err) {
+                console.error(`Gagal mengambil info ${type}:`, err);
+                statusEl.textContent = "Error";
+                playersEl.textContent = "-";
+                pingEl.textContent = "-";
+                motdEl.textContent = "-";
+                dot.classList.remove("green", "red", "loading");
+                dot.classList.add("red");
+            }
+        }
+
+        function refreshAll() {
+            fetchServerInfo("belunada", "java", "java");
+            fetchServerInfo("Sann_Waltz.aternos.me:32600", "bedrock", "bedrock");
+        }
+
+        refreshAll();
+        setInterval(refreshAll, 15000);
+
+        document.getElementById("menuToggle").onclick = () => {
+            document.getElementById("menu").classList.toggle("hidden");
+        };
+    </script>
 </body>
 </html>
